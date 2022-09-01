@@ -52,13 +52,14 @@ document.body.appendChild(div2);*/
     .then((response) => response.json())
     .then((data) => word =data[0])
 }*/
-
+randomWord()
 let word = ''
 let wrong = []
 let correct = []
 let gameOver = false
+let trials = 6
 
-function getRandomWord() {
+function randomWord() {
     fetch('https://random-word-api.herokuapp.com/word?number=1')
         .then(response => response.json())
         .then(data => {
@@ -109,7 +110,7 @@ function displayLetters() {
 function checkWin() {
     if(wrong.length >= 6) {
         gameOver = true
-        document.getElementById("result").innerHTML = "<h2>You Lost ...</h2>"
+        document.querySelector(".message").innerText = "You Lost, Try Again"
     }
     else {
         for(let i = 1; i < word.length - 1; i++) {
@@ -119,11 +120,12 @@ function checkWin() {
             }
         }
         gameOver = true
-        document.getElementById("result").innerHTML = "<h2>You Win!</h2>"
+        document.querySelector(".message").innerText = "You Won!"
     }
 }
 
 function playLetter(ch) {
+    let trial = Number(document.querySelector('span').innerText)
     let letter = String.fromCharCode(ch)
     if(word.includes(letter)) {
         correct.push(letter)
@@ -131,6 +133,8 @@ function playLetter(ch) {
     }
     else {
         wrong.push(letter)
+        trial--
+        document.querySelector("span").innerText = trial
         console.log(wrong)
     }
     checkWin()

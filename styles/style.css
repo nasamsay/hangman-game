@@ -26,6 +26,15 @@ h1 {
     border: 2px solid #001858;
     font-size: 25px;
 }
+
+#letters button:disabled {
+    background-color: #FDF6E4;
+    color: #001858;
+    border: 2px solid #001858;
+    font-size: 25px;
+}
+
+
 h4,
 .show {
     color: #ff0062;
