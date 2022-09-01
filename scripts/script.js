@@ -57,7 +57,11 @@ let word = ''
 let wrong = []
 let correct = []
 let gameOver = false
-let trials = 6
+
+
+function refreshPage(){
+    window.location.reload();
+}
 
 function randomWord() {
     fetch('https://random-word-api.herokuapp.com/word?number=1')
@@ -70,7 +74,6 @@ function randomWord() {
             console.log(word)
             displaySecret()
             displayLetters()
-            document.getElementById("result").innerHTML = '&nbsp;'
         })
 }
 
@@ -110,7 +113,8 @@ function displayLetters() {
 function checkWin() {
     if(wrong.length >= 6) {
         gameOver = true
-        document.querySelector(".message").innerText = "You Lost, Try Again"
+        document.querySelector(".message").innerText = "You Lost"
+        document.querySelector(".tryAgain").innerHTML ="<button onclick=refreshPage()>Play Again</button>"
     }
     else {
         for(let i = 1; i < word.length - 1; i++) {
@@ -121,6 +125,7 @@ function checkWin() {
         }
         gameOver = true
         document.querySelector(".message").innerText = "You Won!"
+        document.querySelector(".tryAgain").innerHTML ="<button onclick=refreshPage()>Play Again</button>"
     }
 }
 
