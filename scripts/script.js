@@ -61,7 +61,6 @@ function displayHint() {
     const hint = document.querySelector(".hint")
     hint.innerHTML = "<button class='btnHint' onclick =getHint()>Hint</button>"
     const btn = document.querySelector(".btnHint")
-    console.log(btn)
     btn.addEventListener('click', (e)=>{
         ctr +=1
         console.log(ctr)
@@ -76,7 +75,14 @@ function displayHint() {
 }
 
 function getHint(){
-
+    let hints =[]
+    for(i = 0; i<word.length; i++){
+        if(!correct.includes(word[i])){
+            hints.push(word[i])
+        }
+    }
+    const hintLetter = hints[Math.floor(Math.random()*hints.length)]
+    playLetter(hintLetter.charCodeAt(0))
 }
 function checkWin() {
     if(wrong.length >= 10) {
@@ -112,6 +118,7 @@ function playLetter(ch) {
     displaySecret()
     displayLetters()
     drawCanvas()
+    //getHint()
 }
 
 function drawCanvas() {

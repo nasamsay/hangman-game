@@ -72,7 +72,7 @@ h4,
 }
 
 .hint button {
-    margin-top: 30px;
+    margin-top: 10px;
     background-color: #001858;
     color: #FDF6E4;
     font-size: 20px;
@@ -90,4 +90,12 @@ h4,
 .hint button:disabled {
     background-color: #FDF6E4;
     color: #001858;
+}
+
+
+@media screen and (max-width: 640px) {
+    #letters{
+        display: block;
+        margin:0;
+    }
 }
