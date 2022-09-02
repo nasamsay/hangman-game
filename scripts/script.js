@@ -118,7 +118,6 @@ function playLetter(ch) {
     displaySecret()
     displayLetters()
     drawCanvas()
-    //getHint()
 }
 
 function drawCanvas() {
