@@ -1,63 +1,12 @@
-/*const LETTER = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
-let div1 = document.createElement("div");
-div1.className = "alphabet"
-let alphabet = function () {
-    for (let i = 0; i < LETTER.length; i++) {
-        let btn = document.createElement("button")
-        btn.className = "button"
-        btn.innerHTML = LETTER[i];
-        div1.appendChild(btn)
-        document.body.append(div1);
-    }
-}
-alphabet()*/
-/*const words = {
-    FootballTeams: ["everton", "liverpool", "swansea", "chelsea", "hull", "manchester-city", "newcastle-united"],
-    films: ["alien", "dirty-harry", "gladiator", "finding-nemo", "jaws"],
-    cities: ["manchester", "milan", "madrid", "amsterdam", "prague"]
-}
-let allKeys = Object.keys(words);
-// console.log(allKeys)
-let randomPropNumber = Math.floor(Math.random() * allKeys.length);
-// console.log(randomPropNumber)
-let randomPropName = allKeys[randomPropNumber]
-// console.log(randomPropName);
-let randomPropValue = words[randomPropName];
-// console.log(randomPropValue)
-let randomValueNumber = Math.floor(Math.random() * allKeys.length);
-let randomValue = randomPropValue[randomValueNumber]
-// console.log(randomValue)
-// let div2 = document.createElement("div");
-// let p = document.createElement("p")
-// let span = document.createElement("span")
-// let pText = document.createTextNode("The Chosen Category Is");
-// span.innerText = randomPropName;
-// p.append(span)
-// span.append(pText);
-// div2.append(p);
-// div2.className = "categories"
-// document.body.appendChild(div2);
-let div2 = document.createElement("div");
-div2.className = "show"
-let p = document.createElement("p")
-let span = document.createElement("span")
-div2.append(p)
-div2.append(span)
-let pText = document.createTextNode("The Chosen Category Is");
-p.append(pText);
-span.innerText = randomPropName;
-document.body.appendChild(div2);*/
-/*function randomWord(){
-    fetch('https://random-word-api.herokuapp.com/word?number=1')
-    .then((response) => response.json())
-    .then((data) => word =data[0])
-}*/
 randomWord()
+
+
+
+
 let word = ''
 let wrong = []
 let correct = []
 let gameOver = false
-
 
 function refreshPage(){
     window.location.reload();
@@ -71,17 +20,17 @@ function randomWord() {
             gameOver = false
             wrong = []
             correct = []
-            console.log(word)
             displaySecret()
             displayLetters()
+            displayHint()
         })
 }
 
 function displaySecret() {
     let secret = ''
     for(let i = 0; i < word.length; i++) {
-        if(correct.includes(word.charAt(i))) {
-            secret += ' ' + word.charAt(i) + ' '
+        if(correct.includes(word[i])) {
+            secret += ' ' + word[i] + ' '
         }
         else {
             secret += ' _ '
@@ -101,24 +50,43 @@ function displayLetters() {
         if(gameOver || wrong.includes(ch) || correct.includes(ch)) {
             disabled = 'disabled'
         }
-        letters += "<button onclick='playLetter(" + ch.charCodeAt(0) + ")' "
+        letters += "<button onclick='playLetter( "+ ch.charCodeAt(0)+")' "
                 + disabled + ">" + ch + "</button> "
-        if(counter % 9 == 0) {
-            letters += "<br/>"
-        }
     })
     document.getElementById("letters").innerHTML = letters
 }
 
+function displayHint() {
+    let ctr =0
+    const hint = document.querySelector(".hint")
+    hint.innerHTML = "<button class='btnHint' onclick =getHint()>Hint</button>"
+    const btn = document.querySelector(".btnHint")
+    console.log(btn)
+    btn.addEventListener('click', (e)=>{
+        ctr +=1
+        console.log(ctr)
+        if(ctr >= 3){
+            btn.disabled = true;
+            hint.innerHTML = hint.innerHTML + "<h2>You Used All The Hints!</h2>"
+        }
+        else{
+            btn.disabled =false;
+        }
+    })
+}
+
+function getHint(){
+
+}
 function checkWin() {
-    if(wrong.length >= 6) {
+    if(wrong.length >= 10) {
         gameOver = true
         document.querySelector(".message").innerText = "You Lost"
         document.querySelector(".tryAgain").innerHTML ="<button onclick=refreshPage()>Play Again</button>"
     }
     else {
-        for(let i = 1; i < word.length - 1; i++) {
-            let ch = word.charAt(i)
+        for(let i = 0; i < word.length; i++) {
+            let ch = word[i]
             if(!correct.includes(ch)) {
                 return
             }
@@ -131,16 +99,14 @@ function checkWin() {
 
 function playLetter(ch) {
     let trial = Number(document.querySelector('span').innerText)
-    let letter = String.fromCharCode(ch)
+    const letter = String.fromCharCode(ch)
     if(word.includes(letter)) {
         correct.push(letter)
-        console.log(correct)
     }
     else {
         wrong.push(letter)
         trial--
         document.querySelector("span").innerText = trial
-        console.log(wrong)
     }
     checkWin()
     displaySecret()
@@ -151,52 +117,53 @@ function playLetter(ch) {
 function drawCanvas() {
     let canvas = document.querySelector('canvas');
     let context = canvas.getContext('2d');
-
     context.clearRect(0, 0, canvas.width, canvas.height);
-
-    context.fillRect(10, 120, 100, 10);
-    context.fillRect(20, 20, 7, 100);
-    context.fillRect(20, 20, 50, 7);
-    context.fillRect(20, 20, 50, 7);
-    context.fillRect(64, 20, 3, 15);
-
-    let wrongLetters = wrong.length;
+    const wrongLetters = wrong.length;
 
     switch (wrongLetters) {
-        case 6:
+        case 10:
             // Left leg
             context.beginPath();
             context.moveTo(66, 85);
             context.lineTo(52, 95);
             context.stroke();
-        case 5:
+        case 9:
             // Right leg
             context.beginPath();
             context.moveTo(66, 85);
             context.lineTo(80, 95);
             context.stroke();
-        case 4:
+        case 8:
             // Left hand
             context.beginPath();
             context.moveTo(66, 55);
             context.lineTo(52, 65);
             context.stroke();
-        case 3:
+        case 7:
             // Right hand
             context.beginPath();
             context.moveTo(66, 55);
             context.lineTo(80, 65);
             context.stroke();
-        case 2:
+        case 6:
             // Body
             context.beginPath();
             context.moveTo(66, 49);
             context.lineTo(66, 85);
             context.stroke();
-        case 1:
+        case 5:
             // Head
             context.beginPath();
             context.arc(66, 41, 8, 0, 2 * Math.PI);
             context.stroke();
+        case 4:
+            context.fillRect(64, 20, 3, 15);
+        case 3:
+            context.fillRect(20, 20, 50, 7);
+        case 2:
+            context.fillRect(20, 20, 7, 100);
+        case 1:
+            context.fillRect(10, 120, 100, 10);
+
     }
 }

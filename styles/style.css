@@ -3,6 +3,7 @@ body {
     background-size: cover;
     background-color: #FDF6E4;
     font-family: 'Poppins';
+    color: #001858;
 }
 h1 {
     font-family: 'Mystery Quest';
@@ -44,11 +45,49 @@ h4,
 #secret-word{
     font-family: 'Poppins';
 }
- .tryAgain button {
+
+.tryAgain button {
     background-color: #001858;
     color: #FDF6E4;
     font-size: 20px;
     font-family: "Poppins";
     padding: 5px;
     border-radius: 10px;
- }
+    cursor: pointer;
+}
+
+.tryAgain button:hover {
+    color:#001858;
+    background-color: #FDF6E4;
+}
+
+#letters {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-left:200px;
+    margin-right: 200px;
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+
+.hint button {
+    margin-top: 30px;
+    background-color: #001858;
+    color: #FDF6E4;
+    font-size: 20px;
+    font-family: "Poppins";
+    padding: 5px;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.hint button:hover {
+    color:#001858;
+    background-color: #FDF6E4;
+}
+
+.hint button:disabled {
+    background-color: #FDF6E4;
+    color: #001858;
+}
