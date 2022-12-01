@@ -13,7 +13,7 @@ function refreshPage(){
 }
 
 function randomWord() {
-    fetch('https://random-word-api.herokuapp.com/word?number=1')
+    fetch('https://random-word-form.herokuapp.com/random/noun')
         .then(response => response.json())
         .then(data => {
             word = data[0]
